@@ -253,10 +253,16 @@ class python::install {
           $virtualenv_package = "${python}-virtualenv"
         }
         'Debian': {
-          if fact('lsbdistcodename') == 'trusty' {
-            $virtualenv_package = 'python-virtualenv'
-          } else {
-            $virtualenv_package = 'virtualenv'
+          case $facts['lsbdistcodename'] {
+            'precise': {
+              $virtualenv_package = 'python-virtualenv'
+            }
+            'trusty': {
+              $virtualenv_package = 'python-virtualenv'
+            }
+            default: {
+              $virtualenv_package = 'virtualenv'
+            }
           }
         }
         'Gentoo': {
